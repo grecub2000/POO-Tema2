@@ -238,6 +238,33 @@ class Arbore_bicolor:public Arbore
         void fix_incalcare(Nod_rosu_negru*, Nod_rosu_negru*);
         int adancime(Nod_rosu_negru*);
         int max(int a, int b);
+        virtual int adancime_neagra(Nod_rosu_negru* x)
+        {
+            if(x == nullptr)
+            {
+                return 0;
+            }
+            else
+            {   int ANS, AND;
+                int n = 0;
+
+                if((x -> get_dr() != nullptr) && (x -> get_st() -> get_culoare() == 'n'))
+                {
+                    n = 1;
+                }
+                ANS = adancime_neagra(x -> get_st()) + n;
+                n = 0;
+                if((x -> get_dr() != nullptr) && (x -> get_dr() -> get_culoare() == 'n'))
+                {
+                    n = 1;
+                }
+                AND = adancime_neagra(x -> get_dr()) + n;
+                return ANS;
+            }
+        }
+
+
+};
 
 void Arbore_bicolor :: inserare(int data)
 {
@@ -624,14 +651,34 @@ cout << arb;
 Arbore_bicolor  arb(9);
 Nod_rosu_negru nrn(7);
 arb.inserare(1);
+cout << "radacina este " << *arb.get_radacina() << "\n";
+arb.inserare(2);
+cout << "radacina este " << *arb.get_radacina() << "\n";
+arb.inserare(3);
+cout << "radacina este " << *arb.get_radacina() << "\n";
+arb.inserare(4);
+cout << "radacina este " << *arb.get_radacina() << "\n";
+arb.inserare(5);
+cout << "radacina este " << *arb.get_radacina() << "\n";
+arb.inserare(6);
+cout << "radacina este " << *arb.get_radacina() << "\n";
+arb.inserare(7);
+arb.inserare(10);
+cout << "radacina este " << *arb.get_radacina() << "\n";
+arb.inserare(8);
+cout << "radacina este " << *arb.get_radacina() << "\n";
+arb.inserare(9);
+cout << "radacina este " << *arb.get_radacina() << "\n";
 arb.cautare(321);
 cout << arb;
-arb.cautare(1);
+arb.cautare(8);
 Nod_rosu_negru *k = arb.get_radacina();
 arb.succesor(7);
 arb.predecesor(8);
 int n = arb.adancime(k);
 cout << "\nAdancimea arborelui : " << n << "\n";
+n = arb.adancime_neagra(k);
+cout << "\nAdancimea neagra a arborelui : " << n << "\n";
 
 return 0;
 }
